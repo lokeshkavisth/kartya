@@ -1,14 +1,13 @@
-import Link from "next/link";
-import React from "react";
 import { navConfig } from "@/config/nav";
+import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 
 const MainNav = () => {
   return (
-    <header className="sticky top-0 border-b border-dashed">
+    <header className="sticky top-0 border-b border-dashed hidden md:block">
       <section className="flex items-center gap-4 border-x border-dashed container mx-auto h-14 px-4">
         <div>
-          <span>LOGO</span>
+          <Link href={"/"}>Kartya</Link>
         </div>
 
         <nav>
@@ -23,7 +22,14 @@ const MainNav = () => {
           ))}
         </nav>
 
-        <div></div>
+        <div className="ml-auto">
+          <Link
+            href="/login"
+            className={buttonVariants({ variant: "default", size: "sm" })}
+          >
+            Login
+          </Link>
+        </div>
       </section>
     </header>
   );
