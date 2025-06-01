@@ -1,6 +1,7 @@
 import { navConfig } from "@/config/nav";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import { ModeSwitch } from "./mode-switch";
 
 const MainNav = () => {
   return (
@@ -22,7 +23,8 @@ const MainNav = () => {
           ))}
         </nav>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-4">
+          <ModeSwitch />
           <Link
             href="/login"
             className={buttonVariants({ variant: "default", size: "sm" })}
