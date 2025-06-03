@@ -13,12 +13,16 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   const data = await payload.find({
     collection: "categories" as CollectionSlug,
     pagination: false,
+    depth: 1,
+    sort: "name",
     where: {
       category: {
         exists: false,
       },
     },
   });
+
+  // console.log(data);
 
   const formattedData = data.docs.map((category) => ({
     ...category,
