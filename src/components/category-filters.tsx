@@ -14,14 +14,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { CategoryType } from "@/types/type";
-import {
-  ChevronDown,
-  ChevronRight,
-  ListFilter,
-  Menu,
-  Search,
-} from "lucide-react";
+import { CategoriesGetManyOutput } from "@/types/type";
+import { ChevronDown, ChevronRight, ListFilter, Search } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Badge } from "./ui/badge";
@@ -34,11 +28,11 @@ import {
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 
-interface CategoryFiltersProps {
-  categoriesData: CategoryType[];
-}
-
-const CategoryFilters = ({ categoriesData }: CategoryFiltersProps) => {
+const CategoryFilters = ({
+  categoriesData,
+}: {
+  categoriesData: CategoriesGetManyOutput;
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [openCollapsibles, setOpenCollapsibles] = useState<
@@ -131,7 +125,7 @@ const CategoryFilters = ({ categoriesData }: CategoryFiltersProps) => {
             <div className="mt-4 space-y-1">
               {filteredCategories.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-8">
-                  No categories found matching "{searchQuery}"
+                  No categories found matching {`"${searchQuery}"`}
                 </p>
               ) : (
                 filteredCategories.map((category) => (

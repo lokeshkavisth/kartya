@@ -1,18 +1,7 @@
-export type SubcategoryType = {
-  id: string;
-  name: string;
-  slug: string;
-  category: string;
-  subcategories: {
-    docs: any[];
-    hasNextPage: boolean;
-  };
-};
+import type { AppRouter } from "@/trpc/routers/_app";
+import { inferRouterOutputs } from "@trpc/server";
 
-export type CategoryType = {
-  id: string;
-  name: string;
-  slug: string;
-  color?: string;
-  subcategories: SubcategoryType[];
-};
+export type CategoriesGetManyOutput =
+  inferRouterOutputs<AppRouter>["categories"]["getMany"];
+
+export type CategoriesGetManyOutputSingle = CategoriesGetManyOutput[0];
