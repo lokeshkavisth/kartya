@@ -39,7 +39,7 @@ export const SearchFiltersSkeleton = () => {
   return (
     <div className="space-y-2 flex md:block items-center gap-2">
       <Skeleton className="h-10 w-full rounded-md" />
-      <Skeleton className="h-10 w-10 rounded-md" />
+      <Skeleton className="h-10 w-10 rounded-md md:hidden" />
       <div className="items-center gap-1.5 hidden md:flex">
         {[1, 2, 3, 4].map((idx) => (
           <Skeleton key={idx} className="h-8 w-full rounded-md" />

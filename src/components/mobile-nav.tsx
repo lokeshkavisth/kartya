@@ -8,10 +8,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { navConfig } from "@/config/nav";
-import { Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
 import { ModeSwitch } from "./mode-switch";
+import { Button, buttonVariants } from "./ui/button";
 
 const MobileNav = () => {
   return (
@@ -44,13 +44,22 @@ const MobileNav = () => {
                 </nav>
                 <SheetFooter>
                   <Link
-                    href="/login"
+                    prefetch
+                    href="/sign-in"
                     className={buttonVariants({
                       variant: "default",
-                      size: "sm",
                     })}
                   >
-                    Login
+                    Start Selling
+                  </Link>
+                  <Link
+                    prefetch
+                    href="/sign-in"
+                    className={buttonVariants({
+                      variant: "outline",
+                    })}
+                  >
+                    Log out <LogOut />
                   </Link>
                 </SheetFooter>
               </SheetDescription>
