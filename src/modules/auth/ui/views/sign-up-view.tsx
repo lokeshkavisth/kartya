@@ -133,7 +133,7 @@ export default function SignUpView() {
                     <div className="relative">
                       <Input
                         type={showPassword ? "text" : "password"}
-                        placeholder="1JohnD@e"
+                        placeholder="Examp!31"
                         {...field}
                         disabled={signUpMutation.isPending}
                         className="pr-9"
@@ -170,7 +170,7 @@ export default function SignUpView() {
               {signUpMutation.isPending ? (
                 <>
                   <Spinner />
-                  Signing up...
+                  Processing...
                 </>
               ) : (
                 "Sign Up"

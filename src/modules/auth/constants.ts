@@ -1,5 +1,3 @@
-export const AUTH_COOKIE = "payload-token";
-
 export const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@._\-+!*#$=%?])[a-zA-Z\d@._\-+!*#$=%?]{8,60}$/;
 export const usernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/;

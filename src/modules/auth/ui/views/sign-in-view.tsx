@@ -1,5 +1,6 @@
 "use client";
 
+import { Spinner } from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,8 +22,10 @@ import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SignInFormData, signinSchema } from "../../schema";
@@ -31,10 +34,12 @@ export default function SignInView() {
   const trpc = useTRPC();
   const router = useRouter();
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const signInMutation = useMutation(
     trpc.auth.signin.mutationOptions({
       onSuccess: () => {
-        console.log("login success");
+        // console.log("login success");
         toast.success("Welcome back!", {
           description: "You have signed in successfully",
         });
@@ -80,7 +85,12 @@ export default function SignInView() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="example@mail.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="example@mail.com"
+                      {...field}
+                      disabled={signInMutation.isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +103,31 @@ export default function SignInView() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="1Secur@" {...field} />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Examp!31"
+                        {...field}
+                        disabled={signInMutation.isPending}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-1 top-0"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={signInMutation.isPending}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                        <span className="sr-only">
+                          {showPassword ? "Hide password" : "Show password"}
+                        </span>
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,7 +138,14 @@ export default function SignInView() {
               type="submit"
               className="w-full"
             >
-              Sign In
+              {signInMutation.isPending ? (
+                <>
+                  <Spinner />
+                  Processing...
+                </>
+              ) : (
+                " Sign In"
+              )}
             </Button>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}

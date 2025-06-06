@@ -1,8 +1,8 @@
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { cookies as nextCookies, headers as nextHeaders } from "next/headers";
-import { AUTH_COOKIE } from "../constants";
 import { signinSchema, signupSchema } from "../schema";
+import { generateAuthCookie } from "../utils/generate-auth-cookie";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -33,19 +33,13 @@ export const authRouter = createTRPCRouter({
     if (!data.token) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "Failed to login",
+        message: "Failed to signup",
       });
     }
 
-    const cookies = await nextCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    await generateAuthCookie({
+      prefix: ctx.db.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // TODO: Ensure cross-domain cookie sharing
-      // sameSite: "none",
-      // domain: "",
     });
   }),
 
@@ -61,26 +55,15 @@ export const authRouter = createTRPCRouter({
     if (!data.token) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "Failed to login",
+        message: "Failed to signin",
       });
     }
 
-    const cookies = await nextCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    await generateAuthCookie({
+      prefix: ctx.db.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // TODO: Ensure cross-domain cookie sharing
-      // sameSite: "none",
-      // domain: "",
     });
 
     return data;
-  }),
-
-  logout: baseProcedure.mutation(async () => {
-    const cookies = await nextCookies();
-    cookies.delete(AUTH_COOKIE);
   }),
 });
