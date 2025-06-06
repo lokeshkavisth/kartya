@@ -12,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,13 +32,17 @@ import { SignInFormData, signinSchema } from "../../schema";
 export default function SignInView() {
   const trpc = useTRPC();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const signInMutation = useMutation(
     trpc.auth.signin.mutationOptions({
-      onSuccess: () => {
+      onSuccess: async () => {
         // console.log("login success");
+
+        await queryClient.invalidateQueries(trpc.auth.pathFilter());
+
         toast.success("Welcome back!", {
           description: "You have signed in successfully",
         });

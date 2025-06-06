@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,12 +33,15 @@ import { SignUpFormData, signupSchema } from "../../schema";
 export default function SignUpView() {
   const trpc = useTRPC();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const signUpMutation = useMutation(
     trpc.auth.signup.mutationOptions({
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.pathFilter());
+
         toast.success("Welcome!", {
           description: "Thanks for joining Kartya. You can explore now.",
         });
