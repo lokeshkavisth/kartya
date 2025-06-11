@@ -6,6 +6,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import CategoryFilters from "./category-filters";
+import DynamicBreadcrumb from "./dynamic-breadcrumb";
 import { Input } from "./ui/input";
 
 export const SearchFilters = () => {
@@ -16,7 +17,7 @@ export const SearchFilters = () => {
   );
 
   return (
-    <div className="space-y-4 sticky top-0 pt-5 bg-background w-full">
+    <div className="space-y-4 sticky top-0 pt-5 bg-background w-full border-b px-6 border-dashed pb-4">
       <div className="flex md:flex-col items-center gap-2">
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4" />
@@ -31,6 +32,7 @@ export const SearchFilters = () => {
         </div>
         <CategoryFilters categoriesData={data} />
       </div>
+      <DynamicBreadcrumb />
     </div>
   );
 };

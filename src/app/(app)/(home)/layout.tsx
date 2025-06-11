@@ -15,7 +15,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main>
       <Header />
-      <main className="border-x border-dashed min-h-screen container mx-auto p-8">
+      <main className="border-x border-dashed min-h-screen container mx-auto py-8">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Suspense fallback={<SearchFiltersSkeleton />}>
             <SearchFilters />

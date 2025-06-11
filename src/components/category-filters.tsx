@@ -17,6 +17,7 @@ import {
 import { CategoriesGetManyOutput } from "@/types/type";
 import { ChevronDown, ChevronRight, ListFilter, Search } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -38,6 +39,8 @@ const CategoryFilters = ({
   const [openCollapsibles, setOpenCollapsibles] = useState<
     Record<string, boolean>
   >({});
+
+  const params = useParams();
 
   // Filter categories based on search term
   const filteredCategories = categoriesData.filter(
@@ -67,7 +70,15 @@ const CategoryFilters = ({
           <NavigationMenu viewport={false} key={category.id}>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                <NavigationMenuTrigger
+                  className={
+                    params.category === category.slug
+                      ? "text-muted-foreground border"
+                      : ""
+                  }
+                >
+                  {category.name}
+                </NavigationMenuTrigger>
                 {category.subcategories.length > 0 && (
                   <NavigationMenuContent>
                     <ul className="grid w-[200px]">
@@ -75,7 +86,12 @@ const CategoryFilters = ({
                         <li key={subcategory.id}>
                           <NavigationMenuLink asChild>
                             <Link
-                              href={`/category/${category.slug}/${subcategory.slug}`}
+                              className={
+                                params.subcategory === subcategory.slug
+                                  ? "text-muted-foreground underline"
+                                  : ""
+                              }
+                              href={`/categories/${category.slug}/${subcategory.slug}`}
                             >
                               {subcategory.name}
                             </Link>
