@@ -180,7 +180,7 @@ const CategoryFilters = ({
                           {category.subcategories.map((subcategory) => (
                             <Link
                               key={subcategory.id}
-                              href={`/category/${category.slug}/${subcategory.slug}`}
+                              href={`/categories/${category.slug}/${subcategory.slug}`}
                               className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/30"
                               onClick={handleSubcategoryClick}
                             >

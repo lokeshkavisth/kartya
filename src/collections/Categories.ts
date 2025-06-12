@@ -2,12 +2,15 @@ import type { CollectionConfig, CollectionSlug } from "payload";
 
 export const Categories: CollectionConfig = {
   slug: "categories" as CollectionSlug,
-
+  admin: {
+    useAsTitle: "name",
+  },
   fields: [
     {
       name: "name",
       type: "text",
       required: true,
+      unique: true,
     },
     {
       name: "slug",

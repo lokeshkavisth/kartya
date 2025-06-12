@@ -1,6 +1,4 @@
-import React from "react";
-
-function CategoriesPage() {
+async function CategoriesPage() {
   return <div>CategoriesPage</div>;
 }
 
